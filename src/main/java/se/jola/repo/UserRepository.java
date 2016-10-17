@@ -20,7 +20,7 @@ public class UserRepository {
 
 	manager = getManager();
 
-	manager.getTransaction();
+	manager.getTransaction().begin();;
 
 	manager.persist(user);
 
@@ -28,5 +28,11 @@ public class UserRepository {
 
 	manager.close();
     }
+    
+    public void getUser(User user){
+	
+    }
+    
+    
 
 }
