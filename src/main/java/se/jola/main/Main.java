@@ -13,12 +13,23 @@ public class Main {
     
     public static void main(String[] args) {
 	
-	User user = new User("joakim", "landstrom", "joakimlandstrom");
 	List<User> userList = new ArrayList<>();
+	User user = new User("Joakim", "landstorm", "joakimlandstrom"); 
 	
-	try {
+	try{
+	    
 	    userRepository.saveUser(user);
-	} catch (RepositoryException e) {
+	    
+	}catch (Exception e) {
+	   e.printStackTrace();
+	}
+	
+	try{
+	    userList = userRepository.getAllUsers();
+	    
+	    user = userList.get(0);
+	    
+	}catch (Exception e) {
 	    e.printStackTrace();
 	}
 	
@@ -28,12 +39,6 @@ public class Main {
 	   e.printStackTrace();
 	}
 	
-	try{
-	   userList = userRepository.getAllUsers();
-	    
-	}catch (Exception e) {
-	   e.printStackTrace();
-	}
 	System.out.println(userList.toString());
 	
     }

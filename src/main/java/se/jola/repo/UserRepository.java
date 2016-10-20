@@ -59,44 +59,47 @@ public class UserRepository {
 
 	return user;
     }
-    
+
     public List<User> getAllUsers() throws RepositoryException {
-	
+
 	List<User> userList = new ArrayList<>();
-	
-	try{
-	 manager = getManager();
-	
-	Query query = manager.createQuery("SELECT u FROM User u", User.class);
-	
-	userList = query.getResultList();
-	
-	}catch (PersistenceException e) {
+
+	try {
+	    manager = getManager();
+
+	    Query query = manager.createQuery("SELECT u FROM User u", User.class);
+
+	    userList = query.getResultList();
+
+	} catch (PersistenceException e) {
 	    throw new RepositoryException("");
-	}finally {
+	} finally {
 	    manager.close();
 	}
 	return userList;
     }
-    
-    public void updateUser(User user) throws RepositoryException{
-	
-	try{
+
+    public void updateUser(User user) throws RepositoryException {
+
+	try {
 	    manager = getManager();
-	    
+
 	    manager.getTransaction().begin();
-	    
-	    manager.merge(user);
-	    
+
+	    User returnedUser = manager.find(User.class, user.getId());
+
+	    returnedUser.setFirstName(user.getFirstName());
+	    returnedUser.setLastName(user.getLastName());
+
 	    manager.getTransaction().commit();
-	    
-	}catch (PersistenceException e) {
+
+	} catch (PersistenceException e) {
 	    manager.getTransaction().rollback();
-	   throw new RepositoryException("");
-	}finally {
+	    throw new RepositoryException("");
+	} finally {
 	    manager.close();
 	}
-	
+
     }
 
 }
